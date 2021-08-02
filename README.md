@@ -3,7 +3,7 @@
 
 ## How to start server
 ```sh
-yarn run dev
+yarn install && yarn run dev
 ```
 
 ### Create Job
@@ -25,7 +25,7 @@ curl --location --request GET 'http://localhost:3001/shift/d9ddc26b-1d0d-44d1-b9
 curl --location --request DELETE 'http://localhost:3001/job/d9ddc26b-1d0d-44d1-b933-d69d367fff26'
 ```
 
-### delete Shift by shift Id
+### Delete Shift by shift Id
 ```sh
 curl --location --request DELETE 'http://localhost:3001/shift/c6732360-6697-4065-bd35-7c0e45d754c8'
 ```
