@@ -19,16 +19,17 @@ export class ShiftService {
     });
   }
 
-  public async bookTalent(talent: string, id: string): Promise<void> {
+  public async bookTalent(id: string, talent: string): Promise<void> {
     const shift = await this.repository.findOne(id);
     if (shift) {
       shift.talentId = talent;
       await this.repository.save(shift);
+    } else {
+      throw new HttpException(
+        `Couldn't find any shift id ${id}`,
+        HttpStatus.NOT_FOUND,
+      );
     }
-    throw new HttpException(
-      `Couldn't find any shift against job id ${id}`,
-      HttpStatus.NOT_FOUND,
-    );
   }
   public async cancelShiftByJobId(jobId: string): Promise<DeleteResult> {
     const shifts = await this.repository.find({ jobId });
@@ -86,7 +87,6 @@ export class ShiftService {
             shift.id = UUIDv4();
             shift.startTime = startTime;
             shift.endTime = endTime;
-            shift.talentId = UUIDv4();
             await this.repository.save(shift);
           }
         }
