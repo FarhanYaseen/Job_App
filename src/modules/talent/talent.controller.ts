@@ -7,8 +7,8 @@ import { ShiftService } from '../shift/shift.service';
 export class TalentController {
   constructor(private readonly shiftService: ShiftService) {}
 
-  @Delete(':id/shifts')
-  async cancelShiftsForTalent(
+  @Delete(':id')
+  async cancelShiftsByTalentId(
     @Param('id') id: string,
   ): Promise<ResponseDto<CancelResponse>> {
     await this.shiftService.cancelShiftsByTalentId(id);
