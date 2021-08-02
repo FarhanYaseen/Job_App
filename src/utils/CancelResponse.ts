@@ -1,9 +1,7 @@
 export class CancelResponse {
   id: string;
-  cancelled: boolean;
 
-  constructor(id: string, cancelled: boolean) {
+  constructor(id: string) {
     this.id = id;
-    this.cancelled = cancelled;
   }
 }

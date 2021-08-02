@@ -27,8 +27,6 @@ export class ShiftController {
     @Param('jobId', new ParseUUIDPipe()) jobId: string,
   ): Promise<ResponseDto<GetShiftsResponse>> {
     const shifts = await this.shiftService.getShifts(jobId);
-    Logger.log('Shift info', 'shifts');
-
     return new ResponseDto<GetShiftsResponse>(
       new GetShiftsResponse(
         shifts.map(shift => {
@@ -57,12 +55,7 @@ export class ShiftController {
   async cancelShift(
     @Param('shiftId', new ParseUUIDPipe()) shiftId: string,
   ): Promise<ResponseDto<CancelResponse>> {
-    const cancelationResult = await this.shiftService.cancelShiftById(shiftId);
-    if (cancelationResult.affected) {
-      await this.shiftService.cancelShiftById(shiftId);
-    }
-    return new ResponseDto<CancelResponse>(
-      new CancelResponse(shiftId, !!cancelationResult.affected),
-    );
+    await this.shiftService.cancelShiftById(shiftId);
+    return new ResponseDto<CancelResponse>(new CancelResponse(shiftId));
   }
 }

@@ -11,11 +11,7 @@ export class TalentController {
   async cancelShiftsForTalent(
     @Param('id') id: string,
   ): Promise<ResponseDto<CancelResponse>> {
-    const cancelationResult = await this.shiftService.cancelShiftsByTalentId(
-      id,
-    );
-    return new ResponseDto<CancelResponse>(
-      new CancelResponse(id, !!cancelationResult.affected),
-    );
+    await this.shiftService.cancelShiftsByTalentId(id);
+    return new ResponseDto<CancelResponse>(new CancelResponse(id));
   }
 }

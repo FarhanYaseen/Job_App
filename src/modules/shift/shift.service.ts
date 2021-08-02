@@ -19,11 +19,16 @@ export class ShiftService {
     });
   }
 
-  public async bookTalent(talent: string, shiftId: string): Promise<void> {
-    this.repository.findOne(shiftId).then(shift => {
+  public async bookTalent(talent: string, id: string): Promise<void> {
+    const shift = await this.repository.findOne(id);
+    if (shift) {
       shift.talentId = talent;
-      this.repository.save(shift);
-    });
+      await this.repository.save(shift);
+    }
+    throw new HttpException(
+      `Couldn't find any shift against job id ${id}`,
+      HttpStatus.NOT_FOUND,
+    );
   }
   public async cancelShiftByJobId(jobId: string): Promise<DeleteResult> {
     const shifts = await this.repository.find({ jobId });
@@ -67,8 +72,9 @@ export class ShiftService {
     const shifts = await this.repository.find({ talentId });
     if (shifts && shifts.length) {
       try {
-        return this.repository.delete({ talentId }).then(result => {
-          if (result) {
+        const result = await this.repository.delete({ talentId });
+        if (result) {
+          for (const jobShift of shifts) {
             const day = new Date();
             day.setDate(new Date().getDate() + 1);
             const startTime = new Date(day);
@@ -76,13 +82,15 @@ export class ShiftService {
             const endTime = new Date(day);
             endTime.setUTCHours(17);
             const shift = new Shift();
+            shift.jobId = jobShift.jobId;
             shift.id = UUIDv4();
             shift.startTime = startTime;
             shift.endTime = endTime;
-            this.repository.save(shift);
+            shift.talentId = UUIDv4();
+            await this.repository.save(shift);
           }
-          return result;
-        });
+        }
+        return result;
       } catch (e) {
         throw new HttpException(
           `Internal Server Error`,

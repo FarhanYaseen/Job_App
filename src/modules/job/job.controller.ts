@@ -28,12 +28,12 @@ export class JobController {
   async cancelJob(
     @Param('id') id: string,
   ): Promise<ResponseDto<CancelResponse>> {
-    const cancelationResult = await this.jobService.cancelJob(id);
-    if (cancelationResult.affected) {
-      await this.shiftService.cancelShiftByJobId(id);
+    // Delete Shift
+    const cancelShift = this.shiftService.cancelShiftByJobId(id);
+    // Delete Job
+    if (cancelShift) {
+      await this.jobService.cancelJob(id);
     }
-    return new ResponseDto<CancelResponse>(
-      new CancelResponse(id, !!cancelationResult.affected),
-    );
+    return new ResponseDto<CancelResponse>(new CancelResponse(id));
   }
 }
