@@ -1,4 +1,4 @@
-#This repository consists of a simplified version of job Application, which allows companies to order jobs consisting of shifts that talents (workers) can be booked for.
+# This repository consists of a simplified version of job Application, which allows companies to order jobs consisting of shifts that talents (workers) can be booked for.
 
 
 ## How to start server
