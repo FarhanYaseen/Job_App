@@ -1,6 +1,5 @@
 import {
   Controller,
-  Post,
   Delete,
   Body,
   Get,
@@ -8,7 +7,6 @@ import {
   Patch,
   HttpCode,
   ParseUUIDPipe,
-  Logger,
 } from '@nestjs/common';
 import { ResponseDto } from '../../utils/ResponseDto';
 import { GetShiftsResponse } from './dto/GetShiftsResponse';
