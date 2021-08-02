@@ -56,7 +56,7 @@ export class JobService {
       }
     } else {
       throw new HttpException(
-        `Couldn't find any job witht job id:${id}`,
+        `Couldn't find any job against job id:${id}`,
         HttpStatus.NOT_FOUND,
       );
     }

@@ -44,7 +44,7 @@ export class ShiftService {
       }
     } else {
       throw new HttpException(
-        `Couldn't find any shift against job id: ${jobId}`,
+        `Couldn't find any shift against job id:${jobId}`,
         HttpStatus.NOT_FOUND,
       );
     }
@@ -63,7 +63,7 @@ export class ShiftService {
       }
     } else {
       throw new HttpException(
-        `Couldn't find any shift against id: ${id}`,
+        `Couldn't find any shift against id:${id}`,
         HttpStatus.NOT_FOUND,
       );
     }
@@ -89,6 +89,11 @@ export class ShiftService {
             shift.endTime = endTime;
             await this.repository.save(shift);
           }
+        } else {
+          throw new HttpException(
+            `Could not delete shift with id:${talentId}`,
+            HttpStatus.INTERNAL_SERVER_ERROR,
+          );
         }
         return result;
       } catch (e) {
