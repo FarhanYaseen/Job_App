@@ -14,7 +14,7 @@ import { GetShiftResponse } from './dto/GetShiftResponse';
 import { ShiftService } from './shift.service';
 import { ValidationPipe } from '../ValidationPipe';
 import { BookTalentRequest } from './dto/BookTalentRequest';
-import { CancelResponse } from '../../utils/CancelResponse';
+import { DeleteResponse } from '../../utils/DeleteResponse';
 
 @Controller('shift')
 export class ShiftController {
@@ -52,8 +52,8 @@ export class ShiftController {
   @Delete(':shiftId')
   async cancelShift(
     @Param('shiftId', new ParseUUIDPipe()) shiftId: string,
-  ): Promise<ResponseDto<CancelResponse>> {
+  ): Promise<ResponseDto<DeleteResponse>> {
     await this.shiftService.cancelShiftById(shiftId);
-    return new ResponseDto<CancelResponse>(new CancelResponse(shiftId));
+    return new ResponseDto<DeleteResponse>(new DeleteResponse(shiftId));
   }
 }

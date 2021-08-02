@@ -1,4 +1,4 @@
-export class CancelResponse {
+export class DeleteResponse {
   id: string;
 
   constructor(id: string) {
